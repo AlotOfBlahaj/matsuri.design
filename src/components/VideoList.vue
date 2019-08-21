@@ -9,6 +9,8 @@
             <b-button disabled :href="video.Link" id="Button" variant="warning" v-else>暂无视频</b-button>
             <b-button :href="video.Record" id="Button" variant="primary" v-if="video.Record">同传记录</b-button>
             <b-button disabled :href="video.Record" id="Button" v-else>暂无同传</b-button>
+            <b-button :href="video.ASS" id="Button" variant="primary" v-if="video.ASS" >ASS字幕文件</b-button>
+            <b-button disabled :href="video.Record" id="Button" v-else>暂无ASS字幕</b-button>
           </div>
         </b-card>
       </div>
@@ -32,28 +34,6 @@ export default {
       Videos: [],
       Count: undefined,
       loaded: false,
-      Fields: [
-        {
-          key: "Image",
-          label: "封面"
-        },
-        {
-          key: "Title",
-          label: "视频名称"
-        },
-        {
-          key: "Date",
-          label: "日期"
-        },
-        {
-          key: "Link",
-          label: "视频下载"
-        },
-        {
-          key: "Record",
-          label: "同传记录"
-        }
-      ]
     };
   },
   created() {
