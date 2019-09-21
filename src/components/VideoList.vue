@@ -1,7 +1,15 @@
 <template>
   <div v-if="loaded">
+    <div>
+  <b-nav>
+    <b-nav-item @click="updateData()">视频列表</b-nav-item>
+    <b-nav-item-dropdown text="日期">
+      <b-dropdown-item v-for="date in Dates" :key="date" @click="filter_by_date(date)">{{date}}</b-dropdown-item>
+    </b-nav-item-dropdown>
+  </b-nav>
+</div>
     <b-card-group columns>
-      <div v-for="video in Videos" :key="video.Title">
+      <div v-for="video in ShowVideos" :key="video.Title">
         <b-card :footer="video.Date">
           <b-card-text>{{ video.Title }}</b-card-text>
           <div id="div-button">
@@ -38,10 +46,12 @@ export default {
       Videos: [],
       Count: undefined,
       loaded: false,
+      Dates: [],
     };
   },
   created() {
     this.updateData();
+    this.getDateList();
   },
   methods: {
     linkGen(pageNum) {
@@ -53,7 +63,36 @@ export default {
         return pageNum === 1 ? "?" : `?page=${pageNum}`;
       }
     },
-    updateData: function() {
+    filter_by_date(date=undefined) {
+      if (date) {
+        this.updateData(date)
+          }
+      else {
+        this.ShowVideos = this.Videos
+      }
+    },
+    getDateList() {
+      let self = this
+      axios
+        .get("https://matsuri.design/api/videos", {
+          params: {
+            user:
+              this.$route.query.user != undefined
+                ? this.$route.query.user
+                : "natsuiromatsuri",
+            limit: 0,
+            fields: "Date"
+          }
+        }).then(function (response) {
+          for (let video of response.data.VideoList) {
+            let date = video.Date.slice(0,11)
+            self.Dates.push(date)
+          }
+          self.Dates = Array.from(new Set(self.Dates))
+        }
+        )
+    },
+    updateData: function(filter=undefined) {
       this.loaded = false;
       axios
         .get("https://matsuri.design/api/videos", {
@@ -63,14 +102,17 @@ export default {
             user:
               this.$route.query.user != undefined
                 ? this.$route.query.user
-                : "natsuiromatsuri"
+                : "natsuiromatsuri",
+            limit: 9,
+            filter: filter
           }
         })
         .then(
           response => (
             (this.Videos = response.data.VideoList),
             (this.Count = response.data.Count),
-            (this.loaded = true)
+            (this.loaded = true),
+            (this.filter_by_date()) 
           )
         );
     },
@@ -80,6 +122,7 @@ export default {
         : 0;
       return offset;
     }
+
   },
   watch: {
     $route: "updateData"
