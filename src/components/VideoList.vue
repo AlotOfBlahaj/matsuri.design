@@ -25,6 +25,10 @@
       ></b-pagination-nav>
     </div>
   </div>
+  <div style="text-align: center" v-else>
+    <b-spinner variant='primary'>
+    </b-spinner>
+  </div>
 </template>
 
 <script>
