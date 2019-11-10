@@ -1,7 +1,7 @@
 <template>
     <div v-if="loaded">
 
-        <b-nav class="nav-video-list card-blur">
+        <b-nav class="navbar-light nav-video-list card-blur">
             <b-nav-item @click="updateData()">视频列表</b-nav-item>
             <b-nav-item-dropdown boundary text="日期">
                 <b-dropdown-item :key="date" @click="filter_by_date(date)" v-for="date in Dates">{{date}}
@@ -12,19 +12,19 @@
         <div class="my-card-column">
                 <b-card :footer="video.Date" class="card-blur" :key="video.Title" v-for="video in ShowVideos">
                     <b-card-text>{{ video.Title }}</b-card-text>
-                    <div id="div-button">
-                        <b-button :href="video.Link" @click="tracking(video.Title)" id="Button"
+                    <div class="div-button">
+                        <b-button :href="video.Link" @click="tracking(video.Title)"
                                   v-if="video.Link.indexOf('baidu') !== -1" variant="info">百度云
                         </b-button>
-                        <b-button :href="video.Link" @click="tracking(video.Title)" id="Button"
+                        <b-button :href="video.Link" @click="tracking(video.Title)"
                                   v-else-if="video.Link.indexOf('api/s3') !== -1" variant="warning">私有云存储
                         </b-button>
-                        <b-button :href="video.Link" disabled id="Button" v-else variant="warning">暂无视频</b-button>
-                        <b-button :href="video.Record" id="Button" v-if="video.Record" variant="primary">同传记录</b-button>
-                        <b-button :href="video.Record" disabled id="Button" v-else>暂无同传</b-button>
-                        <b-button :href="video.ASS" id="Button" v-if="video.ASS" variant="primary">ASS字幕文件</b-button>
-                        <b-button :href="video.Record" disabled id="Button" v-else>暂无ASS字幕</b-button>
-                        <b-button @click="set_online_video(video.Link, video.Title)" id="Button" v-b-modal="'video'"
+                        <b-button :href="video.Link" disabled v-else variant="warning">暂无视频</b-button>
+                        <b-button :href="video.Record" v-if="video.Record" variant="primary">同传记录</b-button>
+                        <b-button :href="video.Record" disabled v-else>暂无同传</b-button>
+                        <b-button :href="video.ASS" v-if="video.ASS" variant="primary">ASS字幕文件</b-button>
+                        <b-button :href="video.Record" disabled v-else>暂无ASS字幕</b-button>
+                        <b-button @click="set_online_video(video.Link, video.Title)" v-b-modal="'video'"
                                   v-if="video.Link.indexOf('api/s3') !== -1 && video.Link.indexOf('.flv') !== -1"
                                   variant="warning">
                             在线观看（测试）
@@ -35,15 +35,16 @@
         <b-modal centered id="video" ok-only size="xl" title="在线播放">
             <VideoPlayer :src="online_video"></VideoPlayer>
         </b-modal>
-        <div class="overflow-auto">
+
             <b-pagination-nav
+                    class="card-blur nav-bottom"
                     :link-gen="linkGen"
-                    :number-of-pages="Math.ceil(Count/9)"
+                    :number-of-pages="Math.ceil(Count/12)"
                     align="center"
                     limit="7"
                     use-router
             ></b-pagination-nav>
-        </div>
+
     </div>
     <div style="text-align: center" v-else>
         <b-spinner variant='primary'>
@@ -54,7 +55,7 @@
 
 <script>
     import VideoPlayer from "./VideoPlayer";
-
+    import axios from "axios";
     export default {
         components: {VideoPlayer},
         data() {
@@ -136,7 +137,7 @@
                                 this.$route.query.user !== undefined
                                     ? this.$route.query.user
                                     : "natsuiromatsuri",
-                            limit: 9,
+                            limit: 12,
                             filter: filter
                         }
                     })
@@ -151,7 +152,7 @@
             },
             get_offset() {
                 let offset = this.$route.query.page
-                    ? (this.$route.query.page - 1) * 9
+                    ? (this.$route.query.page - 1) * 12
                     : 0;
                 return offset;
             }
@@ -167,12 +168,12 @@
 </script>
 
 <style>
-    #div-button {
+    .div-button {
         margin: 0 auto;
         width: fit-content;
     }
 
-    #Button {
+    .div-button button {
         margin: 8px;
     }
 
@@ -185,7 +186,7 @@
         justify-content: space-around;
     }
 
-    .card-blur{
+    .card-blur,.card-blur .dropdown-menu{
         background-color: rgba(255, 255, 255, 0.7);
         backdrop-filter: blur(3px) grayscale(50%) ;
         border-radius: 0;
@@ -200,6 +201,12 @@
         flex-grow: 1;
     }
 
+    .card-body{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
     .nav-video-list{
         margin: 0 16px;
         width: fit-content;
@@ -207,10 +214,36 @@
         z-index: 1;
     }
 
+    .nav-video-list a{
+        color: #000000AA;
+    }
+
     .dropdown-menu{
-        max-height: 40vh;
+        max-height: 50vh;
         overflow: auto;
-        background: #EEEEEEEE;
+        background-color: #FFFFFFDD!important;
+    }
+
+    .dropdown-menu::-webkit-scrollbar {display: none;}
+
+    .pagination{
+        margin-bottom: 0;
+    }
+    .page-link,.page-item.disabled .page-link{
+        background: none;
+        border: none;
+        margin-left: 0;
+        color: #000000DD;
+    }
+    .page-link:hover{
+        z-index: 0;
+        color: #0056b3;
+        text-decoration: none;
+        background-color: #FFFFFFEE;
+    }
+
+    .nav-bottom{
+        margin: 0 16px;
     }
 
 </style>

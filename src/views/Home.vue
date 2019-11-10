@@ -58,4 +58,7 @@
 </script>
 
 <style>
+    .root{
+        padding-bottom: 16px;
+    }
 </style>
