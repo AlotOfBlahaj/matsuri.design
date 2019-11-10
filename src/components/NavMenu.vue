@@ -42,7 +42,10 @@
 
 <style>
     .top-nav {
+        position: relative;
+        z-index: 10;
         background-color: rgba(255, 255, 255, 0.9);
-        box-shadow: -3px -5px 11px 9px rgba(0, 0, 0, 0.75);
+        box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(3px) grayscale(50%) ;
     }
 </style>

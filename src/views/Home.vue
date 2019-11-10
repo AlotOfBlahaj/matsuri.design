@@ -58,7 +58,7 @@
 </script>
 
 <style>
-    .root {
-        text-shadow: 0 0 3px;
+    .root{
+        padding-bottom: 16px;
     }
 </style>
