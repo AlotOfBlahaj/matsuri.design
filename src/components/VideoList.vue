@@ -27,7 +27,7 @@
                         <b-button @click="set_online_video(video.Link, video.Title)" v-b-modal="'video'"
                                   v-if="video.Link.indexOf('api/s3') !== -1 && video.Link.indexOf('.flv') !== -1"
                                   variant="warning">
-                            在线观看（测试）
+                            在线观看(测试)
                         </b-button>
                     </div>
                 </b-card>
@@ -173,10 +173,11 @@
         width: fit-content;
     }
 
-    .div-button button {
-        margin: 8px;
+    .div-button .btn {
+        margin: 0 4px;
+        border-radius: 0;
+        box-shadow: 0 0 2px 0 #00000033;
     }
-
 
     .my-card-column{
         position: relative;
