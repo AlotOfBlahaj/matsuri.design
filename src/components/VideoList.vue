@@ -1,17 +1,16 @@
 <template>
     <div v-if="loaded">
-        <div>
-            <b-nav>
-                <b-nav-item @click="updateData()">视频列表</b-nav-item>
-                <b-nav-item-dropdown boundary text="日期">
-                    <b-dropdown-item :key="date" @click="filter_by_date(date)" v-for="date in Dates">{{date}}
-                    </b-dropdown-item>
-                </b-nav-item-dropdown>
-            </b-nav>
-        </div>
-        <b-card-group columns>
-            <div :key="video.Title" v-for="video in ShowVideos">
-                <b-card :footer="video.Date" class="f-shadow">
+
+        <b-nav class="nav-video-list card-blur">
+            <b-nav-item @click="updateData()">视频列表</b-nav-item>
+            <b-nav-item-dropdown boundary text="日期">
+                <b-dropdown-item :key="date" @click="filter_by_date(date)" v-for="date in Dates">{{date}}
+                </b-dropdown-item>
+            </b-nav-item-dropdown>
+        </b-nav>
+
+        <div class="my-card-column">
+                <b-card :footer="video.Date" class="card-blur" :key="video.Title" v-for="video in ShowVideos">
                     <b-card-text>{{ video.Title }}</b-card-text>
                     <div id="div-button">
                         <b-button :href="video.Link" @click="tracking(video.Title)" id="Button"
@@ -32,8 +31,7 @@
                         </b-button>
                     </div>
                 </b-card>
-            </div>
-        </b-card-group>
+        </div>
         <b-modal centered id="video" ok-only size="xl" title="在线播放">
             <VideoPlayer :src="online_video"></VideoPlayer>
         </b-modal>
@@ -178,8 +176,41 @@
         margin: 8px;
     }
 
-    .f-shadow {
-        background-color: rgba(255, 255, 255, 0.7);
-        box-shadow: 7px 6px 8px 0 rgba(255, 255, 255, 0.25);
+
+    .my-card-column{
+        position: relative;
+        padding: 8px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
     }
+
+    .card-blur{
+        background-color: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(3px) grayscale(50%) ;
+        border-radius: 0;
+        border: none;
+        box-shadow: 0 0 3px 0 #00000033;
+    }
+
+    .card{
+        margin: 8px;
+        flex-basis: 575px;
+        flex-shrink: 1;
+        flex-grow: 1;
+    }
+
+    .nav-video-list{
+        margin: 0 16px;
+        width: fit-content;
+        position: relative;
+        z-index: 1;
+    }
+
+    .dropdown-menu{
+        max-height: 40vh;
+        overflow: auto;
+        background: #EEEEEEEE;
+    }
+
 </style>

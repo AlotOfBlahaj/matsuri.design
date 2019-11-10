@@ -30,6 +30,7 @@
     .f-jumbotron {
         background-color: rgba(255, 255, 255, 0.7);
         border-radius: 0;
-        box-shadow: -3px -5px 11px 9px rgba(0, 0, 0, 0.75);
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(2px) grayscale(30%) ;
     }
 </style>
