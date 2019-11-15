@@ -14,5 +14,9 @@
   {
     "displayName": "夏色まつり",
     "route": "natsuiromatsuri"
+  },
+  {
+    "displayName": "百鬼あやめ",
+    "route": "nakiriayame"
   }
 ]
