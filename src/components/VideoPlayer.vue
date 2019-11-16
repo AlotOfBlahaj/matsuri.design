@@ -10,7 +10,7 @@
 <script>
     import 'video.js/dist/video-js.css'
     import videojs from 'video.js'
-    import '@videojs/http-streaming'
+    import '../http-streaming'
 
     export default {
         name: "VideoPlayer",

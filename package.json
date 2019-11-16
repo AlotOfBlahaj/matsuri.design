@@ -8,7 +8,6 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@videojs/http-streaming": "^1.10.6",
     "@vue/babel-preset-app": "^4.0.5",
     "@vue/cli": "^4.0.5",
     "bootstrap-vue": "^2.0.0-rc.19",
