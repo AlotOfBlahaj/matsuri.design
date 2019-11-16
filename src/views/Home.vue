@@ -1,6 +1,6 @@
 <template>
     <div class="root"
-         style="background: url(https://i.loli.net/2019/11/02/AZRSfPJkeO6Ucj4.jpg) 0 0 / cover no-repeat fixed;">
+         style="background: url('../AZRSfPJkeO6Ucj4.jpg') 0 0 / cover no-repeat fixed;">
         <NavMenu></NavMenu>
         <Jumbotron :user="currentUser"></Jumbotron>
         <VideoList></VideoList>

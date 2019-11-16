@@ -17,15 +17,15 @@
                                   v-if="video.Link.indexOf('baidu') !== -1" variant="info">百度云
                         </b-button>
                         <b-button :href="video.Link" @click="tracking(video.Title)"
-                                  v-else-if="video.Link.indexOf('api/s3') !== -1" variant="warning">私有云存储
+                                  v-else-if="video.Link.indexOf('api/s3') !== -1" variant="info">私有云存储
                         </b-button>
                         <b-button :href="video.Link" disabled v-else variant="warning">暂无视频</b-button>
                         <b-button :href="video.Record" v-if="video.Record" variant="primary">同传记录</b-button>
                         <b-button :href="video.Record" disabled v-else>暂无同传</b-button>
                         <b-button :href="video.ASS" v-if="video.ASS" variant="primary">ASS字幕文件</b-button>
                         <b-button :href="video.Record" disabled v-else>暂无ASS字幕</b-button>
-                        <b-button @click="set_online_video(video.Link, video.Title)" v-b-modal="'video'"
-                                  v-if="video.Link.indexOf('api/s3') !== -1 && video.Link.indexOf('.flv') !== -1"
+                        <b-button @click="set_online_video(video, video.Title)" v-b-modal="'video'"
+                                  v-if="video.Link.indexOf('api/s3') !== -1"
                                   variant="warning">
                             在线观看(测试)
                         </b-button>
@@ -33,7 +33,8 @@
                 </b-card>
         </div>
         <b-modal centered id="video" ok-only size="xl" title="在线播放">
-            <VideoPlayer :src="online_video"></VideoPlayer>
+            <VideoPlayer :src="online_video" v-if="online_video.indexOf('m3u8') !== -1"></VideoPlayer>
+            <FlvPlayer :src="online_video" v-else></FlvPlayer>
         </b-modal>
 
             <b-pagination-nav
@@ -56,8 +57,10 @@
 <script>
     import VideoPlayer from "./VideoPlayer";
     import axios from "axios";
+    import FlvPlayer from "./FlvPlayer";
+
     export default {
-        components: {VideoPlayer},
+        components: {FlvPlayer, VideoPlayer},
         data() {
             return {
                 Videos: [],
@@ -80,8 +83,12 @@
                     eventValue: 1
                 });
             },
-            set_online_video(link, title) {
-                this.online_video = link;
+            set_online_video(video, title) {
+                if ('M3U8' in video) {
+                    this.online_video = video.M3U8;
+                } else {
+                    this.online_video = video.Link;
+                }
                 this.$ga.event({
                     eventCategory: 'video',
                     eventAction: 'play',
