@@ -14,9 +14,9 @@
     "core-js": "^3.3.2",
     "dash": "^0.3.0",
     "flv.js": "^1.5.0",
+    "m3u8-parser": "^4.4.0",
     "mux.js": "^5.5.1",
     "video.js": "^7.6.5",
-    "videojs-contrib-hls": "^5.15.0",
     "vue": "^2.6.10",
     "vue-analytics": "^5.17.2",
     "vue-router": "^3.0.3"
