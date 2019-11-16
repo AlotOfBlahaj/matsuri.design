@@ -1,35 +1,42 @@
 <template>
     <div>
-        <video controls id="flv-js"></video>
+        <video class="video-js vjs-default-skin" controls id="my-video">
+            <source :src=src type="application/x-mpegURL">
+        </video>
     </div>
 </template>
 
 <script>
-    import flvjs from 'flv.js/src/flv'
+    import 'video.js/dist/video-js.css'
+    import videojs from 'video.js'
+    import 'videojs-contrib-hls'
 
     export default {
         name: "VideoPlayer",
         props: ['src'],
         data() {
-            return {}
+            return {
+                player: ''
+            }
         },
-        created: function () {
-            this.isSupported = flvjs.isSupported();
-            this.flvPlayer = flvjs.createPlayer({type: 'flv', url: this.src, isLive: true})
+        mounted() {
+            this.player = videojs('my-video', {
+                bigPlayButton: false,
+                textTrackDisplay: false,
+                posterImage: false,
+                errorDisplay: true,
+                controlBar: true
+            }, function () {
+                this.play()
+            })
         },
-        mounted: function () {
-            let videoElement = document.getElementById('flv-js');
-            this.flvPlayer.attachMediaElement(videoElement);
-            this.flvPlayer.load();
-            this.flvPlayer.play();
-        },
+        beforeDestroy: function () {
+            // console.log('dispose');
+            this.player.dispose();
+        }
     }
+
 </script>
 
 <style scoped>
-    #flv-js {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-    }
 </style>
