@@ -1,6 +1,6 @@
 <template>
     <div class="root"
-         style="background: url('../AZRSfPJkeO6Ucj4.jpg') 0 0 / cover no-repeat fixed;">
+         style="background: url('../bg.webp') 0 0 / cover no-repeat fixed;">
         <NavMenu></NavMenu>
         <Jumbotron :user="currentUser"></Jumbotron>
         <VideoList></VideoList>

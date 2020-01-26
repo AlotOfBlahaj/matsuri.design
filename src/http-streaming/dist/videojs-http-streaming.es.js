@@ -1386,9 +1386,9 @@ var xhrFactory = function xhrFactory() {
                 options = newOptions;
             }
         }
-        if (options.uri.indexOf('api/s3?') === -1) {
-            let uri_array = options.uri.split('api/')
-            let uri = uri_array[0] + 'api/' + encodeURIComponent(uri_array[1])
+        if (options.uri.indexOf('.m3u8') === -1) {
+            let uri_array = options.uri.split('matsuri/');
+            let uri = uri_array[0] + 'matsuri/' + encodeURIComponent(uri_array[1]);
             options.uri = uri
         }
         var request = videojsXHR(options, function (error, response) {

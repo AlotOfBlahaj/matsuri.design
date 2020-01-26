@@ -17,7 +17,8 @@
                                   v-if="video.Link.indexOf('baidu') !== -1" variant="info">百度云
                         </b-button>
                         <b-button :href="video.Link" @click="tracking(video.Title)"
-                                  v-else-if="video.Link.indexOf('api/s3') !== -1" variant="info">私有云存储
+                                  v-else-if="video.Link.indexOf('api/s3') !== -1 || video.Link.indexOf('matsuri.design')"
+                                  variant="info">私有云存储
                         </b-button>
                         <b-button :href="video.Link" disabled v-else variant="warning">暂无视频</b-button>
                         <b-button :href="video.Record" v-if="video.Record" variant="primary">同传记录</b-button>
@@ -25,15 +26,16 @@
                         <b-button :href="video.ASS" v-if="video.ASS" variant="primary">ASS字幕文件</b-button>
                         <b-button :href="video.Record" disabled v-else>暂无ASS字幕</b-button>
                         <b-button @click="set_online_video(video, video.Title)" v-b-modal="'video'"
-                                  v-if="video.Link.indexOf('api/s3') !== -1"
+                                  v-if="video.Link.indexOf('b2.matsuri') !== -1"
                                   variant="warning">
-                            在线观看(测试)
+                            在线观看
                         </b-button>
                     </div>
                 </b-card>
         </div>
         <b-modal centered id="video" ok-only size="xl" title="在线播放">
-            <VideoPlayer :src="online_video" v-if="online_video.indexOf('m3u8') !== -1"></VideoPlayer>
+            <VideoPlayer :src="online_video"
+                         v-if="online_video.indexOf('m3u8') !== -1 || online_video.indexOf('.ts') !== -1"></VideoPlayer>
             <FlvPlayer :src="online_video" v-else></FlvPlayer>
         </b-modal>
 
