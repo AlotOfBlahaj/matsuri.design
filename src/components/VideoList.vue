@@ -57,10 +57,9 @@
 </template>
 
 <script>
-    import VideoPlayer from "./VideoPlayer";
+    const VideoPlayer = () => import ("./VideoPlayer");
     import axios from "axios";
-    import FlvPlayer from "./FlvPlayer";
-
+    const FlvPlayer = () => import ("./FlvPlayer");
     export default {
         components: {FlvPlayer, VideoPlayer},
         data() {
