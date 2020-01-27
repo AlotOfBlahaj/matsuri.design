@@ -36,6 +36,7 @@
         <b-modal centered id="video" ok-only size="xl" title="在线播放">
             <VideoPlayer :src="online_video"
                          v-if="online_video.indexOf('m3u8') !== -1 || online_video.indexOf('.ts') !== -1"></VideoPlayer>
+            <PlyrPlayer :src="online_video" v-else-if="online_video.indexOf('.mp4') !== -1"></PlyrPlayer>
             <FlvPlayer :src="online_video" v-else></FlvPlayer>
         </b-modal>
 
@@ -59,9 +60,11 @@
 <script>
     const VideoPlayer = () => import ("./VideoPlayer");
     import axios from "axios";
+
     const FlvPlayer = () => import ("./FlvPlayer");
+    const PlyrPlayer = () => import("./PlyrPlayer");
     export default {
-        components: {FlvPlayer, VideoPlayer},
+        components: {FlvPlayer, VideoPlayer, PlyrPlayer},
         data() {
             return {
                 Videos: [],
@@ -85,10 +88,10 @@
                 });
             },
             set_online_video(video, title) {
-                if ('M3U8' in video) {
-                    this.online_video = video.M3U8;
-                } else {
+                if (video.Link.indexOf(".mp4") !== -1) {
                     this.online_video = video.Link;
+                } else {
+                    this.online_video = video.M3U8;
                 }
                 this.$ga.event({
                     eventCategory: 'video',
