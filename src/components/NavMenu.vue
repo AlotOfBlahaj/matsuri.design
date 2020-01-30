@@ -11,7 +11,7 @@
                             {{user.displayName}}
                         </b-dropdown-item>
                     </b-nav-item-dropdown>
-                    <b-nav-item to="/extra/add">补充录播和留言板</b-nav-item>
+                    <b-nav-item to="/extra/about">关于</b-nav-item>
                 </b-navbar-nav>
             </b-collapse>
         </b-navbar>
@@ -29,7 +29,7 @@
         },
         methods: {
             getUser() {
-                axios.get('user.json').then(
+                axios.get('/user.json').then(
                     response => (this.users = response.data)
                 )
             }

@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 const Home = () => import ('./views/Home.vue');
-const Add = () => import ('./views/Add.vue');
+const About = () => import ('./views/About.vue');
 
 Vue.use(Router);
 
@@ -19,8 +20,8 @@ export default new Router({
             component: Home
         },
         {
-            path: '/extra/add',
-            component: Add
+            path: '/extra/about',
+            component: About
         }
     ]
 })

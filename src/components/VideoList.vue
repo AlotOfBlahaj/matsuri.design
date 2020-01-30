@@ -1,24 +1,20 @@
 <template>
     <div v-if="loaded">
 
-        <b-nav class="navbar-light nav-video-list card-blur">
-            <b-nav-item @click="updateData()">视频列表</b-nav-item>
-            <b-nav-item-dropdown boundary text="日期">
-                <b-dropdown-item :key="date" @click="filter_by_date(date)" v-for="date in Dates">{{date}}
-                </b-dropdown-item>
-            </b-nav-item-dropdown>
-        </b-nav>
+        <!--        <b-nav class="navbar-light nav-video-list card-blur">-->
+        <!--            <b-nav-item @click="updateData()">视频列表</b-nav-item>-->
+        <!--            <b-nav-item-dropdown boundary text="日期">-->
+        <!--                <b-dropdown-item :key="date" @click="filter_by_date(date)" v-for="date in Dates">{{date}}-->
+        <!--                </b-dropdown-item>-->
+        <!--            </b-nav-item-dropdown>-->
+        <!--        </b-nav>-->
 
         <div class="my-card-column">
                 <b-card :footer="video.Date" class="card-blur" :key="video.Title" v-for="video in ShowVideos">
-                    <b-card-text>{{ video.Title }}</b-card-text>
+                    <b-card-text><a :href="video.originTarget">{{video.Title}}</a></b-card-text>
                     <div class="div-button">
                         <b-button :href="video.Link" @click="tracking(video.Title)"
-                                  v-if="video.Link.indexOf('baidu') !== -1" variant="info">百度云
-                        </b-button>
-                        <b-button :href="video.Link" @click="tracking(video.Title)"
-                                  v-else-if="video.Link.indexOf('api/s3') !== -1 || video.Link.indexOf('matsuri.design')"
-                                  variant="info">私有云存储
+                                  v-if="video.Link" variant="info">下载视频
                         </b-button>
                         <b-button :href="video.Link" disabled v-else variant="warning">暂无视频</b-button>
                         <b-button :href="video.Record" v-if="video.Record" variant="primary">同传记录</b-button>
@@ -70,13 +66,13 @@
                 Videos: [],
                 Count: undefined,
                 loaded: false,
-                Dates: [],
+                // Dates: [],
                 online_video: '',
             };
         },
         created() {
             this.updateData();
-            this.getDateList();
+            // this.getDateList();
         },
         methods: {
             tracking(title) {
@@ -172,7 +168,7 @@
         watch: {
             $route: function () {
                 this.updateData();
-                this.getDateList();
+                // this.getDateList();
             }
         }
     };
