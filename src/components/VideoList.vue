@@ -18,11 +18,13 @@
                         </b-button>
                         <b-button :href="video.Link" disabled v-else variant="warning">暂无视频</b-button>
                         <b-button :href="video.Record" v-if="video.Record" variant="primary">同传记录</b-button>
+                        <b-button :download="video.Txt" :href="video.Txt" v-else-if="video.Txt" variant="primary">同传记录
+                        </b-button>
                         <b-button :href="video.Record" disabled v-else>暂无同传</b-button>
                         <b-button :href="video.ASS" v-if="video.ASS" variant="primary">ASS字幕文件</b-button>
                         <b-button :href="video.Record" disabled v-else>暂无ASS字幕</b-button>
                         <b-button @click="set_online_video(video, video.Title)" v-b-modal="'video'"
-                                  v-if="video.Link.indexOf('b2.matsuri') !== -1"
+                                  v-if="video.Link.indexOf('b2.matsuri') !== -1 || video.Link.indexOf('/api') !== -1"
                                   variant="warning">
                             在线观看
                         </b-button>
@@ -35,15 +37,23 @@
             <PlyrPlayer :src="online_video" v-else-if="online_video.indexOf('.mp4') !== -1"></PlyrPlayer>
             <FlvPlayer :src="online_video" v-else></FlvPlayer>
         </b-modal>
+        <b-modal centered id="Txt" ok-only size="xl" title="同传查看">
+            <b-form-textarea
+                    id="textarea"
+                    plaintext
+                    rows="20"
+                    v-model="Txt"
+            ></b-form-textarea>
+        </b-modal>
 
-            <b-pagination-nav
-                    class="card-blur nav-bottom"
-                    :link-gen="linkGen"
-                    :number-of-pages="Math.ceil(Count/12)"
-                    align="center"
-                    limit="7"
-                    use-router
-            ></b-pagination-nav>
+        <b-pagination-nav
+                :link-gen="linkGen"
+                :number-of-pages="Math.ceil(Count/12)"
+                align="center"
+                class="card-blur nav-bottom"
+                limit="7"
+                use-router
+        ></b-pagination-nav>
 
     </div>
     <div style="text-align: center" v-else>
@@ -68,6 +78,7 @@
                 loaded: false,
                 // Dates: [],
                 online_video: '',
+                Txt: ""
             };
         },
         created() {
@@ -162,8 +173,12 @@
                     ? (this.$route.query.page - 1) * 12
                     : 0;
                 return offset;
+            },
+            setTxt(url) {
+                axios.get(url).then(resp => {
+                    this.Txt = resp.data;
+                })
             }
-
         },
         watch: {
             $route: function () {
