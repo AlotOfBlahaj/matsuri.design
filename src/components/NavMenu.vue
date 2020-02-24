@@ -11,6 +11,10 @@
                             {{user.displayName}}
                         </b-dropdown-item>
                     </b-nav-item-dropdown>
+                    <b-nav-item-dropdown text="按钮站系列">
+                        <b-dropdown-item href="https://natsuiromatsuri.moe">祭按钮</b-dropdown-item>
+                        <b-dropdown-item href="https://towa.matsuri.best">Towa按钮</b-dropdown-item>
+                    </b-nav-item-dropdown>
                     <b-nav-item to="/extra/about">关于</b-nav-item>
                 </b-navbar-nav>
             </b-collapse>
