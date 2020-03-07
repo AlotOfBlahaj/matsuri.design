@@ -10,7 +10,7 @@
 - 后端
     -  web框架： [Flask](https://github.com/pallets/flask)
     -  数据库： [Mongodb](https://github.com/mongodb/mongo)
-    -  爬虫： [Auto_Record_Matsuri](https://github.com/fzxiao233/Auto_Record_Matsuri)
+    -  爬虫： [Vtb_Record](https://github.com/fzxiao233/Vtb_Record)
 
 ## 支持
  
